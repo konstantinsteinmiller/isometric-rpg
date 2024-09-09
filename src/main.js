@@ -2,36 +2,47 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/examples/jsm/libs/stats.module'
 import GUI from 'lil-gui';
+import World from './world';
+const gui = new GUI();
 
 const stats = Stats()
 document.body.appendChild(stats.dom)
-const gui = new GUI();
-const folder = gui.addFolder('Cube')
 
 
-const renderer = new THREE.WebGLRenderer();
+window.renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setAnimationLoop( animate );
 document.body.appendChild( renderer.domElement );
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-const controls = new OrbitControls( camera, renderer.domElement );
+window.scene = new THREE.Scene();
+window.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+window.controls = new OrbitControls( camera, renderer.domElement );
 
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshStandardMaterial( { color: 0x00ff00 } );
-const cube = new THREE.Mesh( geometry, material );
+const world = new World(10, 10)
+
 const sun = new THREE.DirectionalLight()
 sun.position.set(1,2,3)
+sun.intensity = 3
 const ambient = new THREE.AmbientLight('#ffffff', 1)
 
-scene.add( cube );
+const axesHelper = new THREE.AxesHelper( 2 );
+scene.add( axesHelper );
 scene.add( sun );
 scene.add( ambient );
-camera.position.z = 5;
+// camera.position.z = -1;
+// camera.position.x = -10;
+// camera.position.y = 4;
+camera.position.set(10, 3, 10)
 controls.update();
-folder.add(cube.position, 'x', -2, 2, 0.1).name('X Position')
-folder.addColor(cube.material, 'color')
+
+const worldFolder = gui.addFolder('Terrain')
+worldFolder.add(world, 'width', 1, 20, 1).name('width')
+worldFolder.add(world, 'height', 1, 20, 1).name('height')
+worldFolder.addColor(world.terrain.material, 'color')
+worldFolder.add(world, 'treeCount').name('Tree Count')
+worldFolder.add(world, 'rockCount').name('rock Count')
+worldFolder.add(world, 'bushCount').name('Bush Count')
+worldFolder.add(world, 'generate').name('Generate')
 
 function animate() {
   requestAnimationFrame( animate );

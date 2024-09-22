@@ -1,0 +1,61 @@
+html, body {
+    --primary: black;
+    --secondary: #F9F5F7;
+}
+.slider {
+    display: flex;
+    gap: 20px;
+    width: 300px;
+    overflow-x: scroll;
+    scroll-snap-type: x proximity;
+}
+
+.slider-card {
+    scroll-snap-align: center;
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px 30px;
+    flex-shrink:  0;
+    width: 300px;
+    background-color: var(--secondary);
+    border-radius: 14px;
+    text-align: center;
+}
+
+
+/* -----------------------------------
+ * 3d Slider
+ */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    overflow: hidden;
+}
+.banner .three-d-slider {
+    position: absolute;
+    width: 200px;
+    height: 250px;
+    top: 10%;
+    left: calc(50% - 100px);
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    animation: autoRun 20s linear infinite;
+}
+@keyframes autoRun {
+    from { transform:  perspective(1000px) rotateX(-16deg) rotateY(0deg); }
+    to { transform:  perspective(1000px) rotateX(-16deg) rotateY(360deg); }
+}
+.banner .three-d-slider .item {
+    position: absolute;
+    inset: 0 0 0 0;
+    transform:
+        rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+        translateZ(550px);
+}
+.banner .three-d-slider .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

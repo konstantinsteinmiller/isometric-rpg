@@ -6,8 +6,9 @@
     <style>
         body { margin: 0; }
     </style>
-    <link rel="stylesheet" href="src/glow-button.css">
-    <link rel="stylesheet" href="src/glow-border.css">
+    <link rel="stylesheet" href="src/glow.css">
+    <link rel="stylesheet" href="src/glass.css">
+    <link rel="stylesheet" href="src/slider.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
         * {
@@ -32,21 +33,44 @@
         .wrapper {
             left: 50%;
             top: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             position: absolute;
+            display: flex;
+            gap: 1rem;
+            overflow: hidden;
+            padding: 0;
+            align-items: center;
         }
     </style>
 
 </head>
 <body style="position: relative">
 <script type="module" src="./src/main.js"></script>
+<script type="module" >
+    const onMouseMove = (evt) => {
+      const { currentTarget: target } = evt
+      const rect = target.getBoundingClientRect()
+      const x = evt.clientX - rect.left
+      const y = evt.clientY - rect.top
 
+      target.style.setProperty("--mouse-x", `${x}px`)
+      target.style.setProperty("--mouse-y", `${y}px`)
+    }
+
+    [...document.querySelectorAll('.card')].forEach((card) => {
+      card.onmousemove = evt => onMouseMove(evt)
+    })
+</script>
+
+<div class="button-wrapper">
+    <div style="left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;">
+        <button class="glow-button">Hover Me!</button>
+    </div>
+</div>
 <!--<div class="button-wrapper">-->
-<!--    <div class="wrapper">-->
-<!--        <button class="glow-button">Hover Me!</button>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<div class="button-wrapper">&ndash;&gt;-->
 <!--    <div class="wrapper">-->
 <!--        <div class="glow-border">-->
 <!--            <h2>Glow Border</h2>-->
@@ -56,6 +80,57 @@
 <!--            <h2>Animated Glow Border</h2>-->
 <!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
 <!--        </div>-->
+<!--        <div class="glass card">-->
+<!--            <h2 class="gradient-text">Glass Card</h2>-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
+<!--        </div>-->
+
+<!--        <div class="glass card highlight-card">-->
+<!--            <div class="card-border"></div>-->
+<!--            <div class="card-content"></div>-->
+<!--            <h2 class="gradient-text">Glass Card</h2>-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
+<!--        </div>-->
+<!--        <div class="glass card highlight-card">-->
+<!--            <div class="card-border"></div>-->
+<!--            <div class="card-content"></div>-->
+<!--            <h2 class="gradient-text">Glass Card</h2>-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
+<!--        </div>-->
+
+<!--        <div class="slider">-->
+<!--            <div class="glass card slider-card">-->
+<!--                <h2 class="gradient-text">Slider Card</h2>-->
+<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
+<!--            </div>-->
+<!--            <div class="glass card slider-card">-->
+<!--                <h2 class="gradient-text">Slider Card</h2>-->
+<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
+<!--            </div>-->
+<!--            <div class="glass card slider-card">-->
+<!--                <h2 class="gradient-text">Slider Card</h2>-->
+<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <a class="glass-icon" href="#"><i class="fab fa-facebook-f"></i></a>-->
+<!--        <a class="glass-icon" href="#"><i class="fab fa-instagram"></i></a>-->
+<!--        <a class="glass-icon" href="#"><i class="fab fa-linkedin-in"></i></a>-->
+<!--        <a class="glass-icon" href="#"><i class="fab fa-whatsapp"></i></a>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="banner">-->
+<!--    <div class="three-d-slider" style="&#45;&#45;quantity: 10">-->
+<!--        <div class="item" style="&#45;&#45;position: 1"><img src="assets/images/dragon_1.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 2"><img src="assets/images/dragon_2.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 3"><img src="assets/images/dragon_3.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 4"><img src="assets/images/dragon_4.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 5"><img src="assets/images/dragon_5.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 6"><img src="assets/images/dragon_6.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 7"><img src="assets/images/dragon_7.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 8"><img src="assets/images/dragon_8.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 9"><img src="assets/images/dragon_9.jpg" alt=""></div>-->
+<!--        <div class="item" style="&#45;&#45;position: 10"><img src="assets/images/dragon_10.jpg" alt=""></div>-->
 <!--    </div>-->
 <!--</div>-->
 </body>

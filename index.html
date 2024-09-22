@@ -6,8 +6,57 @@
     <style>
         body { margin: 0; }
     </style>
+    <link rel="stylesheet" href="src/glow-button.css">
+    <link rel="stylesheet" href="src/glow-border.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+        * {
+            font-family: "Bangers", system-ui;
+            font-weight: 400;
+            font-style: normal;
+            padding: 0;
+            margin: 0;
+        }
+
+        .button-wrapper {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            background-color: #16161650;
+            overflow: hidden;
+            transform: scale(1.5);
+            width: 100vw;
+            height: 100vh;
+        }
+        .wrapper {
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%);
+            position: absolute;
+        }
+    </style>
+
 </head>
-<body>
+<body style="position: relative">
 <script type="module" src="./src/main.js"></script>
+
+<!--<div class="button-wrapper">-->
+<!--    <div class="wrapper">-->
+<!--        <button class="glow-button">Hover Me!</button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="button-wrapper">&ndash;&gt;-->
+<!--    <div class="wrapper">-->
+<!--        <div class="glow-border">-->
+<!--            <h2>Glow Border</h2>-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
+<!--        </div>-->
+<!--        <div class="glow-border animated-glow-border">-->
+<!--            <h2>Animated Glow Border</h2>-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facilis numquam odio repellat vel. Aperiam aut autem deleniti dolore doloremque earum, explicabo illo ipsa quae, quis reiciendis, saepe tenetur voluptas.</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 </body>
 </html>

@@ -12,6 +12,7 @@
   - [x] Point and click controls
   - [ ] Navigation (ignore obstacles)
     - [ ] A* Algo
+    - [ ] world -> get(x, z)
   - [ ] Improved Navigation (obstacle avoidance)
 - [ ] Enemies
   - [ ] Draw enemies on screen (static)

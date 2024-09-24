@@ -1,10 +1,13 @@
 import * as THREE from 'three'
+import {search} from './pathfinding'
 
 export default class Player extends THREE.Mesh {
   /** @type {THREE.Raycaster} */
   raycaster = new THREE.Raycaster()
-  constructor() {
+
+  constructor(world) {
     super();
+    this.world = world
     this.geometry = new THREE.CapsuleGeometry(.25, .5)
     this.material = new THREE.MeshStandardMaterial({ color: 0x4040c0 })
     this.position.set(5.5, 0.5, 5.5)
@@ -21,17 +24,26 @@ export default class Player extends THREE.Mesh {
     );
 
     this.raycaster.setFromCamera(coords, camera)
-    const intersectionsList = this.raycaster.intersectObjects([terrain])
+    const intersectionsList = this.raycaster.intersectObject(terrain)
 
 
     intersectionsList.some((intersectee) => {
       // intersectee.object.material.color.set(0xff0000)
-      console.log('intersectee: ', intersectee)
-      this.position.set(
-        Math.floor(intersectee.point.x) + 0.5,
-        0.5,
-        Math.floor(intersectee.point.z) + 0.5,
+      // console.log('intersectee: ', intersectee)
+      const playerCoords = new THREE.Vector2(
+        Math.floor(this.position.x),
+        Math.floor(this.position.z)
       )
+      const selectedCoords = new THREE.Vector2(
+        Math.floor(intersectee.point.x),
+        Math.floor(intersectee.point.z)
+      )
+      // this.position.set(
+      //   selectedCoords.x + 0.5,
+      //   0.5,
+      //   selectedCoords.y + 0.5,
+      // )
+      search(playerCoords, selectedCoords, world)
       return intersectee
     })
   }

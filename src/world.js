@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { getKey } from "@/pathfinding";
 
 const textureLoader = new THREE.TextureLoader()
 const gridTexture = textureLoader.load('assets/textures/grid.png')
@@ -8,6 +9,7 @@ export default class World extends THREE.Group {
 
   constructor(width, height) {
     super()
+    window.world = this
     this.width = width
     this.height = height
     this.treeCount = 10
@@ -104,21 +106,23 @@ export default class World extends THREE.Group {
     this.trees.clear()
 
     for (let i = 0; i < this.treeCount; i++) {
-      const treeMesh = new THREE.Mesh(treeGeometry, treeMaterial)
       const coords = new THREE.Vector2(
         Math.floor(this.width * Math.random()),
         Math.floor(this.height * Math.random())
       )
 
       // don't place objects on top of each others
-      if (this.#objectMap.has(`${coords.x}-${coords.y}`)) continue
+      if (this.#objectMap.has(getKey(coords))) continue
+
+      const treeMesh = new THREE.Mesh(treeGeometry, treeMaterial)
 
       treeMesh.position.set (
         coords.x + .5,
         treeHeight / 2,
         coords.y + .5
       )
-      this.#objectMap.set(`${coords.x}-${coords.y}`, treeMesh)
+      this.#objectMap.set(getKey(coords), treeMesh)
+      treeMesh.name = `Tree ${getKey(coords)}`
       this.trees.add(treeMesh)
     }
   }
@@ -139,7 +143,6 @@ export default class World extends THREE.Group {
       const radius = minRockRadius + Math.random() * (maxRockRadius - minRockRadius)
       const height = minRockHeight + Math.random() * (maxRockHeight - minRockHeight)
       const rockGeometry = new THREE.SphereGeometry(radius, 6, 5)
-      const rockMesh = new THREE.Mesh(rockGeometry, rockMaterial)
 
       const coords = new THREE.Vector2(
         Math.floor(this.width * Math.random()),
@@ -149,12 +152,15 @@ export default class World extends THREE.Group {
       // don't place objects on top of each others
       if (this.#objectMap.has(`${coords.x}-${coords.y}`)) continue
 
+      const rockMesh = new THREE.Mesh(rockGeometry, rockMaterial)
+
       rockMesh.position.set (
         coords.x + .5,
         0,
         coords.y + .5
       )
-      this.#objectMap.set(`${coords.x}-${coords.y}`, rockMesh)
+      this.#objectMap.set(getKey(coords), rockMesh)
+      rockMesh.name = `Rock ${getKey(coords)}`
       rockMesh.scale.y = height
       this.rocks.add(rockMesh)
     }
@@ -177,7 +183,6 @@ export default class World extends THREE.Group {
       const radius = minBushRadius + Math.random() * (maxBushRadius - minBushRadius)
       const height = minBushHeight + Math.random() * (maxBushHeight - minBushHeight)
       const bushGeometry = new THREE.SphereGeometry(radius, 6, 5)
-      const bushMesh = new THREE.Mesh(bushGeometry, bushMaterial)
 
       const coords = new THREE.Vector2(
         Math.floor(this.width * Math.random()),
@@ -187,13 +192,24 @@ export default class World extends THREE.Group {
       // don't place objects on top of each others
       if (this.#objectMap.has(`${coords.x}-${coords.y}`)) continue
 
+      const bushMesh = new THREE.Mesh(bushGeometry, bushMaterial)
+
       bushMesh.position.set (
         coords.x + .5,
         radius,
         coords.y + .5
       )
-      this.#objectMap.set(`${coords.x}-${coords.y}`, bushMesh)
+      this.#objectMap.set(getKey(coords), bushMesh)
+      bushMesh.name = `Bush ${getKey(coords)}`
       this.bushes.add(bushMesh)
     }
+  }
+
+  /** return the object at coords if one exists, otherwise return null
+   * @param {Vector2} coords
+   * @returns {object|null}
+   */
+  getObject(coords) {
+    return this.#objectMap.get(getKey(coords)) ?? null
   }
 }

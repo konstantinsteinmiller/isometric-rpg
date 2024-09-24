@@ -25,6 +25,9 @@ export default class World extends THREE.Group {
     this.bushes = new THREE.Group()
     this.add(this.bushes)
 
+    this.path = new THREE.Group()
+    this.add(this.path)
+
     this.generate()
     scene?.add(this)
   }

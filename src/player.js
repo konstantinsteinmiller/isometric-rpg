@@ -4,6 +4,9 @@ import {search} from './pathfinding'
 export default class Player extends THREE.Mesh {
   /** @type {THREE.Raycaster} */
   raycaster = new THREE.Raycaster()
+  path = []
+  pathIndex = -1
+  pathUpdaterTimer = null
 
   constructor(world) {
     super();
@@ -38,14 +41,47 @@ export default class Player extends THREE.Mesh {
         Math.floor(intersectee.point.x),
         Math.floor(intersectee.point.z)
       )
-      // this.position.set(
-      //   selectedCoords.x + 0.5,
-      //   0.5,
-      //   selectedCoords.y + 0.5,
-      // )
-      search(playerCoords, selectedCoords, world)
+
+      //
+      clearInterval(this.pathUpdaterTimer)
+      this.pathIndex = -1
+
+      // find path from players current position to selected square
+      this.path = search(playerCoords, selectedCoords, world)
+      console.log('path: ', this.path)
+
+      /* if no path found return early */
+      if (this.path === null || this.path.length === 0) return
+      /*
+       * DEBUG: Show Path bread crumbs
+       */
+      this.world.path.clear()
+      this.path.forEach(coords => {
+        const node = new THREE.Mesh(
+          new THREE.SphereGeometry(0.1),
+          new THREE.MeshBasicMaterial({ color: 0xff0000 })
+        )
+        node.position.set(coords.x + 0.5, 0, coords.y + 0.5)
+        world.path.add(node)
+      })
+
+      /* move player */
+      this.pathUpdaterTimer = setInterval(this.updatePosition.bind(this), 500)
+
       return intersectee
     })
+  }
+  updatePosition() {
+    if (this.pathIndex === this.path.length - 1) {
+      clearInterval(this.pathUpdaterTimer)
+      return
+    }
+    const currPos = this.path[++this.pathIndex]
+    this.position.set(
+      currPos.x + 0.5,
+      0.5,
+      currPos.y + 0.5,
+    )
   }
 }
 

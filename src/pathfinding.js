@@ -1,13 +1,13 @@
 import * as THREE from 'three'
 import World from '@/world'
+import {getKey} from "@/utils"
 
 /* return the key for a set of given coords */
 const costMap = new Map()
 const cameFromMap = new Map()
-export const getKey = (coords) => `${coords.x}-${coords.y}`
 
 /**
- * @param {THREE.Vector2} coords
+ * @param {THREE.Vector3} coords
  * @param {World} world
  * @param {Map} costMap
  */
@@ -15,20 +15,20 @@ export const getNeighbors = (coords, world, costMap) => {
   const neighborsList = []
 
   // Up
-  if (coords.y > 0) {
-    neighborsList.push(new THREE.Vector2(coords.x, coords.y - 1))
+  if (coords.z > 0) {
+    neighborsList.push(new THREE.Vector3(coords.x, 0, coords.z - 1))
   }
   // Left
   if (coords.x > 0) {
-    neighborsList.push(new THREE.Vector2(coords.x - 1, coords.y))
+    neighborsList.push(new THREE.Vector3(coords.x - 1, 0, coords.z))
   }
   // Down
-  if (coords.y < world.width - 1) {
-    neighborsList.push(new THREE.Vector2(coords.x, coords.y + 1))
+  if (coords.z < world.width - 1) {
+    neighborsList.push(new THREE.Vector3(coords.x, 0, coords.z + 1))
   }
   // Right
   if (coords.x < world.width - 1) {
-    neighborsList.push(new THREE.Vector2(coords.x + 1, coords.y))
+    neighborsList.push(new THREE.Vector3(coords.x + 1, 0, coords.z))
   }
 
 
@@ -48,19 +48,19 @@ export const getNeighbors = (coords, world, costMap) => {
 }
 
 /**
- * @param {THREE.Vector2} start
- * @param {THREE.Vector2} end
+ * @param {THREE.Vector3} start
+ * @param {THREE.Vector3} end
  * @param {World} world
- * @returns {THREE.Vector2[] | null} if path is found, returns the list of coords,
+ * @returns {THREE.Vector3[] | null} if path is found, returns the list of coords,
  * otherwise null
  */
 export const search = (start, end, world) => {
   const o = world.getObject(start)
 
   // if the end is equal to the start, stop searching
-  if (start.x === end.x && start.y === end.y) return []
+  if (start.equals(end)) return []
 
-  console.log(`Searching for the path from (${start.x},${start.y}) to (${end.x},${end.y})`)
+  console.log(`Searching for the path from (${start.x},${start.z}) to (${end.x},${end.z})`)
 
   let isPathFound = false
   const frontierList = [start]
@@ -91,7 +91,7 @@ export const search = (start, end, world) => {
     // console.log('candidate: ', candidate)
 
     // did we find the end square?
-    if (candidate.x === end.x && candidate.y === end.y) {
+    if (candidate.equals(end)) {
       isPathFound = true
       console.log(`found the end: ${counter} candidates visited`)
       break
@@ -107,9 +107,7 @@ export const search = (start, end, world) => {
       cameFromMap.set(getKey(neighborCoords), candidate)
     })
     frontierList.push(...neighbors)
-    // console.log('neighbors: ', neighbors)
   }
-  console.log('cameFromMap: ', cameFromMap)
 
   if (!isPathFound) null
 

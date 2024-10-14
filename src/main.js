@@ -22,7 +22,7 @@ window.controls = new OrbitControls( camera, renderer.domElement );
 
 const world = new World(10, 10)
 
-const player = new Player(world)
+const player = new Player(new THREE.Vector3(5, 0, 5), world)
 const sun = new THREE.DirectionalLight()
 sun.position.set(1,2,3)
 sun.intensity = 3

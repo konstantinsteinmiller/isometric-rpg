@@ -16,7 +16,23 @@
     - [x] world -> get(x, z)
   - [x] Improved Navigation (obstacle avoidance)
 - [ ] Actions
-  - [ ] 
+  - [x] Refactoring / Reorganizing
+  - [x] Implementing the base framework
+  - [x] Game Object
+    - [x] Player (Human/Computer Player)
+    - [x] Trees / Rocks / Bushes
+  - [ ] Implementing the base Action class
+    - [ ] Movement Action
+  - [ ] Asynchronous Actions
+    - [ ] Movement Input
+    - [ ] Selecting a target square
+    - [ ] Selecting a target object
+  - [ ] Add some UI
+    - [ ] List out actions for the active player 
+    - [ ] Status Bar
+  - [ ] Combat Manager
+    - [ ] Iterate through all players
+    - [ ] R*equest an action from each player*
 - [ ] Enemies
   - [ ] Draw enemies on screen (static)
   - [ ] Patrol

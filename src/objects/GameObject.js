@@ -15,4 +15,17 @@ export default class GameObject extends THREE.Mesh{
     super(geometry, material)
     this.coords = coords
   }
+
+  /**
+   * Moves the player to the coordinates
+   * @param {THREE.Vector3} coords
+   */
+  moveTo(coords) {
+    this.coords = coords
+    this.position.set(
+      this.coords.x + .5,
+      this.coords.y + .5,
+      this.coords.z + .5
+    )
+  }
 }

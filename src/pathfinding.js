@@ -113,14 +113,20 @@ export const search = (start, end, world) => {
 
   let curr = end
   const path = [curr]
-  while(getKey(curr) !== getKey(start)) {
-    const prev = cameFromMap.get(getKey(curr))
-    path.push(prev)
-    curr = prev
-  }
-  path.reverse()
-  path.shift()
 
-  console.log('counter: ', counter)
+  try {
+    while(getKey(curr) !== getKey(start)) {
+      const prev = cameFromMap.get(getKey(curr))
+      path.push(prev)
+      curr = prev
+    }
+    path.reverse()
+    path.shift()
+  } catch (e) {
+    // console.error('No path found', e)
+    return []
+  }
+
+  // console.log('counter: ', counter)
   return path
 }

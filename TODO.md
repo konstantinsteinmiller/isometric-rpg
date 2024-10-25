@@ -21,19 +21,27 @@
   - [x] Game Object
     - [x] Player (Human/Computer Player)
     - [x] Trees / Rocks / Bushes
-  - [ ] Implementing the base Action class
-    - [ ] Movement Action
+  - [x] Implementing the base Action class
+    - [x] Movement Action
+  - [x] Asynchronous Actions
+    - [x] Selecting a target square
+  - [x] Combat Manager
+    - [x] Iterate through all players
+    - [x] Request an action from each player
+- [ ] Combat
+  - [ ] Actions
+    - [ ] MeleeAttackAction
+    - [ ] RangedAttackAction
+  - [ ] Enemies
+    - [ ] Hit Points
+    - [ ] remove the enemies when they are dead
+    - [ ] Draw enemies on screen (static)
+    - [ ] Patrol
+  - [ ] Pathfinding
+    - [ ] don't allow player to move through enemies
   - [ ] Asynchronous Actions
-    - [ ] Movement Input
-    - [ ] Selecting a target square
     - [ ] Selecting a target object
   - [ ] Add some UI
-    - [ ] List out actions for the active player 
+    - [ ] List out actions for the active player
     - [ ] Status Bar
-  - [ ] Combat Manager
-    - [ ] Iterate through all players
-    - [ ] R*equest an action from each player*
-- [ ] Enemies
-  - [ ] Draw enemies on screen (static)
-  - [ ] Patrol
-- [ ] Combat
+- [ ] Enemy AI

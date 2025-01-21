@@ -1,15 +1,17 @@
 import * as THREE from "three"
 import {search} from '@/pathfinding'
 import Action from "@/actions/Action"
+import {updateStatusText} from "@//utils";
 
 
 const pathBreadcrumb = new THREE.Mesh(
   new THREE.SphereGeometry(0.1),
   new THREE.MeshBasicMaterial({ color: 0xff0000 })
 )
+const MOVEMENT_SPEED = 200
 
 export default class MovementAction extends Action {
-  name = 'MovementAction'
+  name = 'Move'
   path = []
   pathIndex = -1
   pathUpdaterTimer = null
@@ -42,6 +44,7 @@ export default class MovementAction extends Action {
       console.log('Movement Action performed')
 
       clearInterval(this.pathUpdaterTimer)
+      updateStatusText('Moving...')
       /* DEBUG: show path breadcrumbs in the world
        */
       this.path.forEach(coords => {
@@ -51,7 +54,7 @@ export default class MovementAction extends Action {
       })
 
       /* move player */
-      this.pathUpdaterTimer = setInterval(updateSourcePosition.bind(this), 500)
+      this.pathUpdaterTimer = setInterval(updateSourcePosition.bind(this), MOVEMENT_SPEED)
     })
   }
 
@@ -74,8 +77,12 @@ export default class MovementAction extends Action {
     )
     // console.log('path: ', this.path)
 
-    /* if no path found return early */
-    if (this.path !== null && this.path.length > 0) return Promise.resolve(true)
-    return Promise.resolve(false)
+    if (this.path === null || this.path.length === 0) {
+      return Promise.resolve({ value: false, reason: 'Could not find path to target square' })
+    }
+    // if (this.path.length === 0) {
+    //   return Promise.resolve({ value: false, reason: 'Pick square other than starting square' })
+    // }
+    return Promise.resolve({ value: true })
   }
 }

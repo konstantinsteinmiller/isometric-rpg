@@ -8,19 +8,16 @@ const treeMaterial = new THREE.MeshStandardMaterial({
   flatShading: true
 })
 
-export default class Tree extends GameObject{
+export default class Tree extends GameObject {
   /**
    * @param coords
    */
   constructor(coords) {
-    super(coords, treeGeometry, treeMaterial)
+    const treeMesh = new THREE.Mesh(treeGeometry, treeMaterial)
+    treeMesh.position.set(0.5, 0.5, 0.5)
+
+    super(coords, treeMesh)
 
     this.name = `Tree ${getKey(coords)}`
-
-    this.position.set (
-      coords.x + .5,
-      coords.y + .5,
-      coords.z + .5
-    )
   }
 }

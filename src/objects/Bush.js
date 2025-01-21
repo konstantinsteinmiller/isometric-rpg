@@ -2,32 +2,29 @@ import * as THREE from 'three'
 import GameObject from './GameObject'
 import {getKey} from "@/utils"
 
+const bushGeometry = new THREE.SphereGeometry(1, 6, 5)
+
 const bushMaterial = new THREE.MeshStandardMaterial({
   color: 0x80a040,
   flatShading: true
 })
-const bushGeometry = new THREE.SphereGeometry(1, 6, 5)
 
 export default class Bush extends GameObject {
-  minBushRadius = 0.1
-  maxBushRadius = 0.3
-  // minBushHeight = 0.5
-  // maxBushHeight = 0.8
   /**
-   * @param coords
+   * @param {THREE.Vector3} coords
    */
   constructor(coords) {
-    super(coords, bushGeometry, bushMaterial)
+    const minRadius = 0.1;
+    const maxRadius = 0.3;
+    const radius = minRadius +
+      (Math.random() * (maxRadius - minRadius));
 
-    this.name = `Bush ${getKey(coords)}`
-    const radius = this.minBushRadius + Math.random() * (this.maxBushRadius - this.minBushRadius)
-    // const height = this.minBushHeight + Math.random() * (this.maxBushHeight - this.minBushHeight)
+    const bushMesh = new THREE.Mesh(bushGeometry, bushMaterial);
+    bushMesh.scale.set(radius, radius, radius);
+    bushMesh.position.set(0.5, radius, 0.5);
 
-    this.scale.set(radius, radius, radius)
-    this.position.set (
-      coords.x + .5,
-      coords.y + radius,
-      coords.z + .5
-    )
+    super(coords, bushMesh);
+
+    this.name = `Bush ${getKey(coords)})`
   }
 }

@@ -3,6 +3,7 @@ import {getKey} from "@/utils"
 import Bush from "@/objects/Bush"
 import Tree from "@/objects/Tree"
 import Rock from "@/objects/Rock"
+import HumanPlayer from "@//players/HumanPlayer";
 
 const textureLoader = new THREE.TextureLoader()
 const gridTexture = textureLoader.load('assets/textures/grid.png')
@@ -19,14 +20,14 @@ export default class World extends THREE.Group {
     this.rockCount = 20
     this.bushCount = 10
 
-    this.trees = new THREE.Group()
-    this.add(this.trees)
+    this.objects = new THREE.Group()
+    this.add(this.objects)
 
-    this.rocks = new THREE.Group()
-    this.add(this.rocks)
+    this.players = new THREE.Group()
+    this.objects.add(this.players)
 
-    this.bushes = new THREE.Group()
-    this.add(this.bushes)
+    this.props = new THREE.Group()
+    this.objects.add(this.props)
 
     this.path = new THREE.Group()
     this.add(this.path)
@@ -37,6 +38,14 @@ export default class World extends THREE.Group {
 
   generate() {
     this.clear()
+
+    // const player1 = new HumanPlayer(new THREE.Vector3(5, 0, 5), 'Player 1')
+    // const player2 = new HumanPlayer(new THREE.Vector3(1, 0, 2), 'Player 2')
+    const player1 = new HumanPlayer(new THREE.Vector3(1, 0, 5), 'Player 1')
+    const player2 = new HumanPlayer(new THREE.Vector3(8, 0, 3), 'Player 2')
+    this.addObject(player1, 'players')
+    this.addObject(player2, 'players')
+
     this.createTerrain()
     this.createTrees()
     this.createRocks()
@@ -50,6 +59,9 @@ export default class World extends THREE.Group {
       this.remove(this.terrain)
     }
 
+    // this.objects.clear()
+    this.players.clear()
+    this.props.clear()
     this.#objectMap.clear()
   }
 
@@ -75,45 +87,38 @@ export default class World extends THREE.Group {
     this.terrain.position.set(this.width /2, 0, this.height/2)
     this.terrain.name = 'Terrain'
     this.add(this.terrain)
-    window.terrain = this.terrain
   }
 
   createTrees() {
-    this.trees.clear()
-
     for (let i = 0; i < this.treeCount; i++) {
       const coords = new THREE.Vector3(
         Math.floor(this.width * Math.random()),
         0,
         Math.floor(this.height * Math.random())
       )
-      this.addObject(new Tree(coords), coords, this.trees)
+      this.addObject(new Tree(coords), 'props')
     }
   }
 
   createRocks() {
-    this.rocks.clear()
-
     for (let i = 0; i < this.rockCount; i++) {
       const coords = new THREE.Vector3(
         Math.floor(this.width * Math.random()),
         0,
         Math.floor(this.height * Math.random())
       )
-      this.addObject(new Rock(coords), coords, this.rocks)
+      this.addObject(new Rock(coords), 'props')
     }
   }
 
   createBushes() {
-    this.bushes.clear()
-
     for (let i = 0; i < this.bushCount; i++) {
       const coords = new THREE.Vector3(
         Math.floor(this.width * Math.random()),
         0,
         Math.floor(this.height * Math.random())
       )
-      this.addObject(new Bush(coords), coords, this.bushes)
+      this.addObject(new Bush(coords), 'props')
     }
   }
 
@@ -121,17 +126,33 @@ export default class World extends THREE.Group {
    * Add an object to the world at the given coordinates unless
    * there is already an object those coordinates
    * @param object
-   * @param {THREE.Vector3} coords
-   * @param {THREE.Group} group
+   * @param { 'players' | 'props' } group
    * @returns {boolean}
    */
-  addObject(object, coords, group) {
+  addObject(object, group) {
     // don't place objects on top of each others
-    if (this.#objectMap.has(getKey(coords))) {
+    if (this.#objectMap.has(getKey(object.coords))) {
       return false
     }
-    group.add(object)
-    this.#objectMap.set(getKey(coords), object)
+    switch (group) {
+      case 'players':
+        this.players.add(object)
+        break
+      case 'props':
+        this.props.add(object)
+        break
+    }
+
+    object.onMove = (object, oldCoords, newCoords) => {
+      this.#objectMap.delete(getKey(oldCoords))
+      this.#objectMap.set(getKey(newCoords), object)
+    }
+    object.onDestroy = (object) => {
+      this.#objectMap.delete(getKey(object.coords))
+      object.removeFromParent()
+    }
+
+    this.#objectMap.set(getKey(object.coords), object)
     return true
   }
 

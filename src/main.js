@@ -25,12 +25,7 @@ window.controls = new OrbitControls( camera, renderer.domElement );
 
 const world = new World(10, 10)
 
-const player1 = new HumanPlayer(new THREE.Vector3(5, 0, 5))
-const player2 = new HumanPlayer(new THREE.Vector3(1, 0, 2))
-
 const combatManager = new CombatManager()
-combatManager.addPlayer(player1)
-combatManager.addPlayer(player2)
 
 const sun = new THREE.DirectionalLight()
 sun.position.set(1,2,3)
@@ -45,6 +40,7 @@ scene.add( ambient );
 // camera.position.x = -10;
 // camera.position.y = 4;
 camera.position.set(10, 3, 10)
+camera.layers.enable(1)
 controls.target.set(5, 0, 5);
 controls.update();
 

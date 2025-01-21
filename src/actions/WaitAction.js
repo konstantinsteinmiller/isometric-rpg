@@ -1,6 +1,7 @@
-/* Base Player class that Human Player derives from */
-export default class Action {
-  name = 'BaseAction'
+import Action from "@/actions/Action";
+
+export default class WaitAction extends Action {
+  name = 'Wait'
 
   /**
    * @type {GameObject}
@@ -12,6 +13,7 @@ export default class Action {
    * @param {GameObject} source
    */
   constructor(source) {
+    super(source)
     this.source = source
   }
 
@@ -22,9 +24,9 @@ export default class Action {
   }
 
   /**
-   * @returns {Promise<{ value: Boolean, reason: string? }>}
+   * @returns {boolean}
    */
   async canPerform() {
-    return Promise.resolve({ value: true })
+    return { value: true }
   }
 }

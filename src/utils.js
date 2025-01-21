@@ -6,3 +6,36 @@ import * as THREE from 'three'
  * @returns {string}
  */
 export const getKey = (coords) => `${coords.x}-${coords.y}-${coords.z}`
+
+/**
+ *
+ * @param {string} text
+ * @returns {THREE.SpriteMaterial}
+ */
+export function createTextMaterial(text) {
+  const size = 512;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+
+  const context = canvas.getContext('2d');
+  context.font = '100px Arial';
+  context.textBaseline = 'middle';
+  context.textAlign = 'center';
+
+  context.strokeStyle = 'black';
+  context.lineWidth = 8;
+  context.fillStyle = 'white';
+
+  context.strokeText(text, size / 2, size / 2);
+  context.fillText(text, size / 2, size / 2);
+
+  return new THREE.SpriteMaterial({
+    map: new THREE.CanvasTexture(canvas)
+  });
+}
+
+export const updateStatusText = (text) => {
+  document.querySelector('.status-text').innerText = text
+}

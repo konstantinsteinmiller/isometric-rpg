@@ -29,19 +29,21 @@
     - [x] Iterate through all players
     - [x] Request an action from each player
 - [ ] Combat
-  - [ ] Actions
-    - [ ] MeleeAttackAction
-    - [ ] RangedAttackAction
+  - [x] Actions
+    - [x] MeleeAttackAction
+    - [x] RangedAttackAction
+    - [x] WaitAction
   - [ ] Enemies
-    - [ ] Hit Points
-    - [ ] remove the enemies when they are dead
+    - [x] Hit Points
+    - [x] remove the enemies when they are dead
     - [ ] Draw enemies on screen (static)
     - [ ] Patrol
-  - [ ] Pathfinding
-    - [ ] don't allow player to move through enemies
-  - [ ] Asynchronous Actions
-    - [ ] Selecting a target object
-  - [ ] Add some UI
-    - [ ] List out actions for the active player
-    - [ ] Status Bar
+  - [x] Pathfinding
+    - [x] don't allow player to move through enemies
+  - [x] Asynchronous Actions
+    - [x] Selecting a target object
+  - [x] Add some UI
+    - [x] List out actions for the active player
+    - [x] Status Bar
+    - [x] display player/object hitpoints above head
 - [ ] Enemy AI

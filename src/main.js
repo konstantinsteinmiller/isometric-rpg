@@ -3,8 +3,9 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/examples/jsm/libs/stats.module'
 import GUI from 'lil-gui';
 import World from './world';
-import HumanPlayer from "@/players/HumanPlayer";
 import CombatManager from "@/CombatManager";
+import inputManager from "@/InputManager";
+
 const gui = new GUI();
 
 const stats = Stats()
@@ -16,7 +17,6 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setAnimationLoop( animate );
 renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild( renderer.domElement );
-
 
 
 window.scene = new THREE.Scene();
@@ -43,6 +43,7 @@ camera.position.set(10, 3, 10)
 camera.layers.enable(1)
 controls.target.set(5, 0, 5);
 controls.update();
+inputManager.init(camera, world)
 
 const worldFolder = gui.addFolder('Terrain')
 worldFolder.add(world, 'width', 1, 20, 1).name('width')

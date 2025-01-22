@@ -15,7 +15,7 @@ export default class Player extends GameObject {
   /**
    * @param {THREE.Vector3} coords
    */
-  constructor(coords/*, world */) {
+  constructor(coords) {
     material = new THREE.MeshStandardMaterial({ color: 0x4040c0 })
     const playerMesh = new THREE.Mesh(geometry, material)
     playerMesh.position.set(0.5, 0.5, 0.5);
@@ -25,7 +25,6 @@ export default class Player extends GameObject {
     this.healthOverlay.visible = true
 
     this.moveTo(coords)
-    // window.addEventListener('mousedown', this.onMouseDown.bind(this))
   }
 
   /**

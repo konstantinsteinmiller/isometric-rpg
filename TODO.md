@@ -46,4 +46,11 @@
     - [x] List out actions for the active player
     - [x] Status Bar
     - [x] display player/object hitpoints above head
+- [ ] Graphic Overhaul
+  - [ ] 3D model player
+  - [ ] 3D model props
+  - [ ] Skybox
+  - [ ] Improved Terrain
+  - [ ] Fog
+- [ ] Player animation
 - [ ] Enemy AI

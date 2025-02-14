@@ -16,9 +16,9 @@ export default class World extends THREE.Group {
     window.world = this
     this.width = width
     this.height = height
-    this.treeCount = 10
-    this.rockCount = 20
-    this.bushCount = 10
+    this.treeCount = 50
+    this.rockCount = 50
+    this.bushCount = 50
 
     this.objects = new THREE.Group()
     this.add(this.objects)

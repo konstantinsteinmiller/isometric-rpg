@@ -1,33 +1,35 @@
 import * as THREE from 'three'
 import GameObject from './GameObject'
-import {getKey} from "@/utils"
+import {clamp, getKey} from "@/utils"
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
-const rockGeometry = new THREE.SphereGeometry(1, 6, 5)
-const rockMaterial = new THREE.MeshStandardMaterial({
-  color: 0xb0b0b0,
-  flatShading: true
-})
+const rockModel1 = await new GLTFLoader().loadAsync('assets/models/rock1.glb')
+const rockModel2 = await new GLTFLoader().loadAsync('assets/models/rock2.glb')
+const rockModel3 = await new GLTFLoader().loadAsync('assets/models/rock3.glb')
 
 export default class Rock extends GameObject {
   /**
    * @param coords
    */
   constructor(coords) {
-    const minRadius = 0.2;
-    const maxRadius = 0.4;
-    const minHeight = 0.1;
-    const maxHeight = 0.3;
+    const minScale = 1.0;
+    const maxScale = 1.5;
+    const minRotation = 0;
+    const maxRotation = Math.PI * 2;
 
-    const radius = minRadius +
-      (Math.random() * (maxRadius - minRadius));
-    const height = minHeight +
-      (Math.random() * (maxHeight - minHeight));
+    const scale = minScale +
+      (Math.random() * (maxScale - minScale));
+    const rotation = minRotation +
+      (Math.random() * (maxRotation - minRotation));
 
-    const rockMesh = new THREE.Mesh(rockGeometry, rockMaterial);
-    rockMesh.scale.set(radius, height, radius);
-    rockMesh.position.set(0.5, height / 4, 0.5);
+    const randomModel = [rockModel1, rockModel2, rockModel3][clamp(Math.floor(Math.random() * 3), 0, 2)]
 
-    super(coords, rockMesh);
+    const mesh = randomModel.scene.children[0].clone();
+    mesh.scale.set(scale, scale, scale);
+    mesh.position.set(0.5, 0, 0.5);
+    mesh.rotation.set(0, rotation, 0);
+
+    super(coords, mesh);
 
     this.name = `Rock ${getKey(coords)}`
   }

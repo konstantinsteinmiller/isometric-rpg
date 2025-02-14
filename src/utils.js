@@ -39,3 +39,7 @@ export function createTextMaterial(text) {
 export const updateStatusText = (text) => {
   document.querySelector('.status-text').innerText = text
 }
+
+export const clamp = (x, a, b) => {
+  return Math.min(Math.max(x, a), b)
+}

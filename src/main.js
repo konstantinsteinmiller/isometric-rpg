@@ -11,19 +11,21 @@ const gui = new GUI();
 const stats = Stats()
 document.body.appendChild(stats.dom)
 
-
+/* init renderer */
 window.renderer = new THREE.WebGLRenderer();
+renderer.setClearColor(0x80b0ff)
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setAnimationLoop( animate );
 renderer.setPixelRatio(window.devicePixelRatio);
-document.body.appendChild( renderer.domElement );
+document.body.appendChild(renderer.domElement);
 
 
 window.scene = new THREE.Scene();
+window.scene.fog = new THREE.Fog(0x80b0ff, 5, 30)
 window.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 window.controls = new OrbitControls( camera, renderer.domElement );
 
-const world = new World(10, 10)
+const world = new World(20, 20)
 
 const combatManager = new CombatManager()
 

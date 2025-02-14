@@ -48,9 +48,9 @@
     - [x] display player/object hitpoints above head
 - [ ] Graphic Overhaul
   - [ ] 3D model player
-  - [ ] 3D model props
+  - [x] 3D model props
   - [ ] Skybox
   - [ ] Improved Terrain
-  - [ ] Fog
+  - [x] Fog
 - [ ] Player animation
 - [ ] Enemy AI

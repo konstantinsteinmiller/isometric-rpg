@@ -16,8 +16,41 @@
     - [x] world -> get(x, z)
   - [x] Improved Navigation (obstacle avoidance)
 - [ ] Actions
-  - [ ] 
-- [ ] Enemies
-  - [ ] Draw enemies on screen (static)
-  - [ ] Patrol
+  - [x] Refactoring / Reorganizing
+  - [x] Implementing the base framework
+  - [x] Game Object
+    - [x] Player (Human/Computer Player)
+    - [x] Trees / Rocks / Bushes
+  - [x] Implementing the base Action class
+    - [x] Movement Action
+  - [x] Asynchronous Actions
+    - [x] Selecting a target square
+  - [x] Combat Manager
+    - [x] Iterate through all players
+    - [x] Request an action from each player
 - [ ] Combat
+  - [x] Actions
+    - [x] MeleeAttackAction
+    - [x] RangedAttackAction
+    - [x] WaitAction
+  - [ ] Enemies
+    - [x] Hit Points
+    - [x] remove the enemies when they are dead
+    - [ ] Draw enemies on screen (static)
+    - [ ] Patrol
+  - [x] Pathfinding
+    - [x] don't allow player to move through enemies
+  - [x] Asynchronous Actions
+    - [x] Selecting a target object
+  - [x] Add some UI
+    - [x] List out actions for the active player
+    - [x] Status Bar
+    - [x] display player/object hitpoints above head
+- [ ] Graphic Overhaul
+  - [ ] 3D model player
+  - [x] 3D model props
+  - [ ] Skybox
+  - [ ] Improved Terrain
+  - [x] Fog
+- [ ] Player animation
+- [ ] Enemy AI

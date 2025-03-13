@@ -3,26 +3,32 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/examples/jsm/libs/stats.module'
 import GUI from 'lil-gui';
 import World from './world';
-import Player from "@/player";
+import CombatManager from "@/CombatManager";
+import inputManager from "@/InputManager";
+
 const gui = new GUI();
 
 const stats = Stats()
 document.body.appendChild(stats.dom)
 
-
+/* init renderer */
 window.renderer = new THREE.WebGLRenderer();
+renderer.setClearColor(0x80b0ff)
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setAnimationLoop( animate );
 renderer.setPixelRatio(window.devicePixelRatio);
-document.body.appendChild( renderer.domElement );
+document.body.appendChild(renderer.domElement);
+
 
 window.scene = new THREE.Scene();
+window.scene.fog = new THREE.Fog(0x80b0ff, 5, 30)
 window.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 window.controls = new OrbitControls( camera, renderer.domElement );
 
-const world = new World(10, 10)
+const world = new World(20, 20)
 
-const player = new Player(world)
+const combatManager = new CombatManager()
+
 const sun = new THREE.DirectionalLight()
 sun.position.set(1,2,3)
 sun.intensity = 3
@@ -36,8 +42,10 @@ scene.add( ambient );
 // camera.position.x = -10;
 // camera.position.y = 4;
 camera.position.set(10, 3, 10)
+camera.layers.enable(1)
 controls.target.set(5, 0, 5);
 controls.update();
+inputManager.init(camera, world)
 
 const worldFolder = gui.addFolder('Terrain')
 worldFolder.add(world, 'width', 1, 20, 1).name('width')
@@ -47,6 +55,7 @@ worldFolder.add(world, 'treeCount').name('Tree Count')
 worldFolder.add(world, 'rockCount').name('rock Count')
 worldFolder.add(world, 'bushCount').name('Bush Count')
 worldFolder.add(world, 'generate').name('Generate')
+
 
 function animate() {
   requestAnimationFrame( animate );
@@ -63,3 +72,10 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight);
 })
+
+// const action = await player1.requestAction()
+// const canPerform = await action.canPerform()
+// console.log('canPerform: ', canPerform)
+// canPerform && await action.perform()
+
+combatManager.takeTurns()

@@ -12,6 +12,7 @@
 		"vite": "^5.4.3"
 	},
 	"scripts": {
-		"dev": "vite"
+		"dev": "vite",
+		"build-github": "vite build --base=/isometric-rpg/"
 	}
 }
